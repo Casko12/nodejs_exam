@@ -1,43 +1,39 @@
 let mongoose = require("mongoose");
-let student = new mongoose.Schema({
-    name: {
+let user = new mongoose.Schema({
+    first_name: {
         type:String,
         required: true,
-        minLength:[6,'Tên phải có độ dài tối thiểu là 6'],
+        minLength:[1],
         maxLength:255
     },
-    email: {
+    last_name: {
         type:String,
-        required:  true,
-        unique: [true,'Email vừa nhập đã tồn tại'],
-        minLength:6,
-        maxLength:255,
-        validate: {
-            validator: (v)=>{
-                const emailFormat = /^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/;
-                return v.match(emailFormat);
-            },
-            message: (t)=> `${t.value} không phải email`
-        }
-    },
-    age: {
-        type: Number,
         required: true,
-        min: 18,
-        max: 100
+        minLength:[1],
+        maxLength:255
     },
-    tel: {
+
+    mobile: {
         type:String,
         required:true,
-        unique: [true,'SĐT vừa nhập đã tồn tại'],
+        unique: [true,'mobile number used'],
         validate: {
             validator: (v)=>{
                 const regExp = /^(\([0-9]{3}\) |[0-9]{3})[0-9]{3}[0-9]{4}/;
                 return v.match(regExp) && v.startsWith('0');
             },
-            message: t => `${t.value} không phải là số điện thoại`
+            message: t => `${t.value} not a valid phone number`
         }
     },
-    avatar: String  // upploads
+    user_name:{
+        type:String,
+        required:true,
+        unique: [true,'user name used'],
+    },
+    password:{
+        type:String,
+        required:  true,
+    }
+
 });
-module.exports = mongoose.model("Student",student);
+module.exports = mongoose.model("User",user);
