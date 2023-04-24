@@ -1,29 +1,26 @@
 const User = require("../models/user");
 
+exports.get= (req,res)=>{
+    User.find({}).then(rs=>{
+        res.render("user/list",{
+            items: rs
+        });
+    }).catch(err=>{
+        res.send(err);
+    });
+}
+
 exports.createForm = (req,res)=>{
     res.render("user/create");
 }
-exports.save= async (req,res)=>{
+exports.save= (req,res)=>{
     let s = req.body;
-    const file = req.file; // upload nhieu anh 1 luc: them "s"
-    if(file)
-    s.avatar= "/uploads/user/"+file.filename;
     let newUser = new User(s);
-    try{
-        await newUser.save();
-        //send email
-    await transport.sendMail({
-        from:'Demo Node JS T2203E',
-        to: 'phamduyhung.ftu@gmail.com', //user.email, muon nhieu nguoi thi "," o giua
-        //cc:''  hoac bcc:'' tuong tu
-        subject: "mail test",
-        html: '<p> Mail send from demo</p>'
-    });
-        //end email
-        res.redirect("/users")
-    }catch (err){
+    newUser.save().then(rs=>{
+        res.redirect("/users");
+    }).catch(err=>{
         res.send(err);
-    }
+    })
 };
 exports.editForm =(req,res)=>{
     let id = req.params.id;
