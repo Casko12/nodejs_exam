@@ -3,13 +3,13 @@ let user = new mongoose.Schema({
     first_name: {
         type:String,
         required: true,
-        minLength:[1],
+        minLength:1,
         maxLength:255
     },
     last_name: {
         type:String,
         required: true,
-        minLength:[1],
+        minLength:1,
         maxLength:255
     },
 
@@ -17,7 +17,7 @@ let user = new mongoose.Schema({
         type:String,
         required:true,
         unique: [true,'mobile number used'],
-        
+
     },
     user_name:{
         type:String,
