@@ -17,13 +17,7 @@ let user = new mongoose.Schema({
         type:String,
         required:true,
         unique: [true,'mobile number used'],
-        validate: {
-            validator: (v)=>{
-                const regExp = /^(\([0-9]{3}\) |[0-9]{3})[0-9]{3}[0-9]{4}/;
-                return v.match(regExp) && v.startsWith('0');
-            },
-            message: t => `${t.value} not a valid phone number`
-        }
+        
     },
     user_name:{
         type:String,
